@@ -777,7 +777,7 @@ const questionData = [
 let questionNumber = 0;
 let questionDataNumber = 0;
 let question = document.getElementById("question");
-let answer = document.querySelectorAll(".answer");
+let answer = document.querySelectorAll(".answer");  // [options]
 function setQueAndAns() {
     question.innerHTML = `<span>0${questionNumber + 1}.</span> ${questionData[questionNumber].question}`
     answer[0].textContent = `${questionData[questionDataNumber].options[0]}`
@@ -790,33 +790,26 @@ setQueAndAns();  // **************** run the function firsttime to set question 
 // ******************************** if answer is right then color is green else color is red ****************
 let totalRigt = 0;
 let totalWrong = 0;
-
-let stopLoop = 11;
+let setIntervalId = null;
 answer.forEach((element) => {
     element.onclick = function () {
         if (element.textContent == questionData[questionDataNumber].correct_option) {
             totalRigt++;
             congratulationsAnimation();
-
-
         } else {
             totalWrong++;
             answer.forEach((el) => {
                 if (el.textContent == questionData[questionDataNumber].correct_option) {
                     el.style.backgroundColor = "#04a56a";
-
                 } else {
                     el.style.backgroundColor = "rgb(255, 126, 126)";
                 }
             });
-
         }
         incrimentTotalValue();
-        document.getElementById("next-que").style.pointerEvents = "all"
-        stopSetimeOut = 1;
-        stopLoop = 0;
+        document.getElementById("next-que").style.pointerEvents = "all";
+        clearInterval(setIntervalId);
     };
-
 });
 
 
@@ -830,79 +823,68 @@ function incrimentTotalValue() {
 
 
 // ***************************** this [timer] function work when we click Next qus ***********************
-
+let timerValue = 0;
 function timer() {
-    let timerValue2 = 0;
-    setTimeout(function () {
+    setIntervalId = setInterval(function () {
+        timerValue++;
+        document.querySelector(".timer-box").textContent = `${timerValue}`;
+    }, 1000);
+}
 
-
-        for (let index = 0; index < stopLoop; index++) {
-            setTimeout(function () {
-                if (stopLoop == 0) {
-                    document.querySelector(".timer-box").textContent = `${stopLoop}`   // not fix tempruaty fix 
-                }
-                else {
-                    document.querySelector(".timer-box").textContent = `${index}`
-                    timerValue2 += 1;
-
-                    ShowaAns();
-                }
-
-            }, index * 1000);
-
-        }
-
-
-
-
-    }, 500);
-
-
-    function ShowaAns() {
-        if (timerValue2 === 10) {
-            answer.forEach((el) => {
-                if (el.textContent == questionData[questionDataNumber].correct_option) {
-                    el.style.backgroundColor = "#04a56a";
-
-                } else {
-                    el.style.backgroundColor = "rgb(255, 126, 126)";
-                }
-            });
-
-            answer.forEach((el, i) => {
-                answer[i].style.pointerEvents = "none"; // ***************** when timer end then we dont click the answer boxes ***********************
-            })
-            document.getElementById("next-que").style.pointerEvents = "all"
-        }
-
+timer(); // Call the function for the first time  when reload the page
+setInterval(function(){
+    if(timerValue === 10){
+        clearInterval(setIntervalId);
+        ShowAns();
     }
+},1000);
+
+
+
+// ************************************ if timer value == 10 the function will run **************************   
+function ShowAns() {
+    answer.forEach((el) => {
+        if (el.textContent == questionData[questionDataNumber].correct_option) {
+            el.style.backgroundColor = "#04a56a";
+
+        } else {
+            el.style.backgroundColor = "rgb(255, 126, 126)";
+        }
+    });
+
+    answer.forEach((el, i) => {
+        answer[i].style.pointerEvents = "none"; // ***************** when timer end then we dont click the answer boxes ***********************
+    })
+    document.getElementById("next-que").style.pointerEvents = "all"
+
 
 }
 
-timer(); // ***************************** call the function for reload firstime ************************************
+
 
 
 // ********************************** Next Question button ***********************************
-let netQue = document.getElementById("next-que");
-netQue.onclick = function () {
+let nextQue = document.getElementById("next-que");
+nextQue.onclick = function () {
     questionNumber++;
     questionDataNumber++;
     setQueAndAns();
     answer.forEach((el, i) => {
         answer[i].style.backgroundColor = "";
-    })
+    });
 
-    document.getElementById("next-que").style.pointerEvents = "none"
-    document.querySelector(".overlay-cong").style.display = "none"
-    document.querySelector(".overlay-cong-overlay-2").style.display = "none"
+    document.getElementById("next-que").style.pointerEvents = "none";
+    document.querySelector(".overlay-cong").style.display = "none";
+    document.querySelector(".overlay-cong-overlay-2").style.display = "none";
     answer.forEach((el, i) => {
-        answer[i].style.pointerEvents = "all"; // ***************** when timer end then we dont click the answer boxes ***********************
-    })
-    gsapAnimationQue();
-    stopLoop = 11;
-    timer();
+        answer[i].style.pointerEvents = "all";
+    });
 
-}
+    gsapAnimationQue();
+    clearInterval(setIntervalId); // Clear any existing interval before starting a new one
+    timer();
+     timerValue = 0;
+};
 
 // ******************************** when click next que all question loading animation **************************
 
