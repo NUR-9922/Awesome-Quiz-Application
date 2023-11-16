@@ -796,8 +796,10 @@ answer.forEach((element) => {
             answer.forEach((el) => {
                 if (el.textContent == questionData[questionDataNumber].correct_option) {
                     el.style.backgroundColor = "#04a56a"; // Green for correct answer
+                    congratulationsAnimation(); 
                 } else {
                     el.style.backgroundColor = "rgb(255, 126, 121)"; // Red for incorrect answers
+                   
                 }
             });
         } else {
@@ -828,14 +830,27 @@ netQue.onclick = function () {
     answer[2].style.backgroundColor = "";
     answer[3].style.backgroundColor = "";
     document.getElementById("next-que").style.pointerEvents = "none"
+    document.querySelector(".overlay-cong").style.display = "none"
+    document.querySelector(".overlay-cong-overlay-2").style.display = "none"
     gsapAnimationQue()
 
+
 }
+
+// ******************************** when click next que all question loading animation **************************
+
 function gsapAnimationQue() {
     gsap.from('.answer', {
-        delay: .5,
-        duration: 0.5,
-        stagger: 0.3,
+        delay: .7,
+        duration: 0.3,
+        stagger: 0.1,
         opacity: 0,
     });
 }
+// ************************************** congratulationsAnimation ******************************
+function congratulationsAnimation() {
+    document.querySelector(".overlay-cong").style.display = "flex"
+    document.querySelector(".overlay-cong-overlay-2").style.display = "flex"
+}
+
+
