@@ -27,7 +27,7 @@ body {
     -o-border-radius: 10px;
     overflow: hidden;
     padding: 10px;
-  
+
 }
 
 .heading {
@@ -157,7 +157,8 @@ body {
     justify-content: space-between;
     margin-top: 20px;
     font-family: Poppins;
- 
+    flex-direction: column;
+    gap: 20px;
     .left {
 
         border-radius: 10px;
@@ -174,16 +175,19 @@ body {
         font-size: 20px;
         font-weight: 800;
         color: #fff;
-     
+
     }
 }
-.last-row-right{
+
+.last-row-right {
     display: flex;
     gap: 10px;
 }
 
 
-#next-que, .total-right, .total-wrong {
+#next-que,
+.total-right,
+.total-wrong {
     padding: 10px 15px;
     background-color: #037dff;
     color: #fff;
@@ -197,35 +201,102 @@ body {
     pointer-events: none;
 }
 
-.overlay-cong{
-   width: 100% ;
-   height: 85%;
-   border: 2px solid;
-   position: absolute;
-   top: 0;
-   overflow: hidden;
-   border-radius: 10px;
-   -webkit-border-radius: 10px;
-   -moz-border-radius: 10px;
-   -ms-border-radius: 10px;
-   -o-border-radius: 10px;
-   display: none;
-   transition:  all .5s;
-   -webkit-transition:  all .5s;
-   -moz-transition:  all .5s;
-   -ms-transition:  all .5s;
-   -o-transition:  all .5s;
+.overlay-cong {
+    width: 100%;
+    height: 85%;
+    border: 2px solid;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    display: none;
+    transition: all .5s;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
 }
 
-.overlay-cong-overlay-1{
+.overlay-cong-overlay-1 {
     width: 100%;
     height: 100%;
-    
+
 }
-.overlay-cong-overlay-2{
+
+.overlay-cong-overlay-2 {
     width: 100%;
     height: 100%;
     position: absolute;
     z-index: 99;
     display: none;
+}
+
+
+
+
+@media only screen and (max-width: 600px) {
+    body {
+
+        align-items: start;
+        margin-top: 50px;
+
+    }
+
+    .mein-cointainer {
+        width: 600px;
+    }
+
+    .heading {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+    }
+
+    .heading-left {
+        width: 55%;
+        height: 100%;
+
+    }
+
+    .heading-right {
+        width: 35%;
+        height: 80%;
+        font-size: 13px;
+    }
+
+    .timer-box {
+        width: 30px;
+        height: 30px;
+        right: 5px;
+        top: 5px;
+    }
+
+    #question {
+        font-size: 20px;
+    }
+
+    .answer {
+        width: 100%;
+        height: 70px;
+        font-size: 18px;
+        line-height: 25px;
+    }
+
+    #next-que,
+    .total-right,
+    .total-wrong {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .total-wrong:active{
+        color: #037dff;
+    }
 }
