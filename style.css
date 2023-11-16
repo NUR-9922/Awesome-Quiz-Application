@@ -157,7 +157,7 @@ body {
     justify-content: space-between;
     margin-top: 20px;
     font-family: Poppins;
-    flex-direction: column;
+    
     gap: 20px;
     .left {
 
@@ -288,7 +288,9 @@ body {
         font-size: 18px;
         line-height: 25px;
     }
-
+    .last-row {
+        flex-direction: column;
+    }
     #next-que,
     .total-right,
     .total-wrong {
@@ -296,7 +298,10 @@ body {
         font-size: 14px;
     }
 
-    .total-wrong:active{
-        color: #037dff;
+    .overlay-cong {
+        width: 100%;
+        height: 75%;
+        object-fit: cover;
+        left: 0;
     }
 }
