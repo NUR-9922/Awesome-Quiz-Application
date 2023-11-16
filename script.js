@@ -787,36 +787,99 @@ function setQueAndAns() {
 }
 setQueAndAns();  // **************** run the function firsttime to set question value *************
 
-// ******************************** if answer is right then color is green else red ****************
+// ******************************** if answer is right then color is green else color is red ****************
+let totalRigt = 0;
+let totalWrong = 0;
 
-
+let stopLoop = 11;
 answer.forEach((element) => {
     element.onclick = function () {
         if (element.textContent == questionData[questionDataNumber].correct_option) {
-            answer.forEach((el) => {
-                if (el.textContent == questionData[questionDataNumber].correct_option) {
-                    el.style.backgroundColor = "#04a56a"; // Green for correct answer
-                    congratulationsAnimation(); 
-                } else {
-                    el.style.backgroundColor = "rgb(255, 126, 121)"; // Red for incorrect answers
-                   
-                }
-            });
+            totalRigt++;
+            congratulationsAnimation();
+
+
         } else {
-            // Set background color to red for incorrect answers
+            totalWrong++;
             answer.forEach((el) => {
                 if (el.textContent == questionData[questionDataNumber].correct_option) {
                     el.style.backgroundColor = "#04a56a";
+
                 } else {
                     el.style.backgroundColor = "rgb(255, 126, 126)";
                 }
             });
+
         }
+        incrimentTotalValue();
         document.getElementById("next-que").style.pointerEvents = "all"
-
-
+        stopSetimeOut = 1;
+        stopLoop = 0;
     };
+
 });
+
+
+// ****************************** incriment total right and wrong ********************************
+function incrimentTotalValue() {
+    document.querySelector(".total-right").textContent = `Total Right : ${totalRigt}`;
+    document.querySelector(".total-wrong").textContent = `Total wrong : ${totalWrong}`;
+
+}
+
+
+
+// ***************************** this [timer] function work when we click Next qus ***********************
+
+function timer() {
+    let timerValue2 = 0;
+    setTimeout(function () {
+
+
+        for (let index = 0; index < stopLoop; index++) {
+            setTimeout(function () {
+                if (stopLoop == 0) {
+                    document.querySelector(".timer-box").textContent = `${stopLoop}`   // not fix tempruaty fix 
+                }
+                else {
+                    document.querySelector(".timer-box").textContent = `${index}`
+                    timerValue2 += 1;
+
+                    ShowaAns();
+                }
+
+            }, index * 1000);
+
+        }
+
+
+
+
+    }, 500);
+
+
+    function ShowaAns() {
+        if (timerValue2 === 10) {
+            answer.forEach((el) => {
+                if (el.textContent == questionData[questionDataNumber].correct_option) {
+                    el.style.backgroundColor = "#04a56a";
+
+                } else {
+                    el.style.backgroundColor = "rgb(255, 126, 126)";
+                }
+            });
+
+            answer.forEach((el, i) => {
+                answer[i].style.pointerEvents = "none"; // ***************** when timer end then we dont click the answer boxes ***********************
+            })
+            document.getElementById("next-que").style.pointerEvents = "all"
+        }
+
+    }
+
+}
+
+timer(); // ***************************** call the function for reload firstime ************************************
 
 
 // ********************************** Next Question button ***********************************
@@ -825,15 +888,19 @@ netQue.onclick = function () {
     questionNumber++;
     questionDataNumber++;
     setQueAndAns();
-    answer[0].style.backgroundColor = "";
-    answer[1].style.backgroundColor = "";
-    answer[2].style.backgroundColor = "";
-    answer[3].style.backgroundColor = "";
+    answer.forEach((el, i) => {
+        answer[i].style.backgroundColor = "";
+    })
+
     document.getElementById("next-que").style.pointerEvents = "none"
     document.querySelector(".overlay-cong").style.display = "none"
     document.querySelector(".overlay-cong-overlay-2").style.display = "none"
-    gsapAnimationQue()
-
+    answer.forEach((el, i) => {
+        answer[i].style.pointerEvents = "all"; // ***************** when timer end then we dont click the answer boxes ***********************
+    })
+    gsapAnimationQue();
+    stopLoop = 11;
+    timer();
 
 }
 

@@ -172,6 +172,9 @@ body {
         -ms-border-radius: 10px;
         -o-border-radius: 10px;
         font-size: 20px;
+        font-weight: 800;
+        color: #fff;
+     
     }
 }
 .last-row-right{
@@ -180,8 +183,8 @@ body {
 }
 
 
-#next-que {
-    padding: 10px 10px;
+#next-que, .total-right, .total-wrong {
+    padding: 10px 15px;
     background-color: #037dff;
     color: #fff;
     border-radius: 5px;
