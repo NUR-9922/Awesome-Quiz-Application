@@ -289,7 +289,9 @@ body {
         line-height: 25px;
     }
     .last-row {
+        margin-top: 0px;
         flex-direction: column;
+        padding-top: 50px;
     }
     #next-que,
     .total-right,
@@ -300,7 +302,7 @@ body {
 
     .overlay-cong {
         width: 100%;
-        height: 75%;
+        height: 78%;
         object-fit: cover;
         left: 0;
     }

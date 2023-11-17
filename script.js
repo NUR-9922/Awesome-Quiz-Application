@@ -790,12 +790,13 @@ setQueAndAns();  // **************** run the function firsttime to set question 
 // ******************************** if answer is right then color is green else color is red ****************
 let totalRigt = 0;
 let totalWrong = 0;
-let setIntervalId = null;
+let setIntervalId;
 answer.forEach((element) => {
     element.onclick = function () {
         if (element.textContent == questionData[questionDataNumber].correct_option) {
             totalRigt++;
             congratulationsAnimation();
+
         } else {
             totalWrong++;
             answer.forEach((el) => {
@@ -805,11 +806,17 @@ answer.forEach((element) => {
                     el.style.backgroundColor = "rgb(255, 126, 126)";
                 }
             });
+
         }
         incrimentTotalValue();
+        //********************* click not work when click any box [ not over right answer ] **************
+        answer.forEach((el) => {
+            el.style.pointerEvents = "none";
+        });
         document.getElementById("next-que").style.pointerEvents = "all";
         clearInterval(setIntervalId);
     };
+
 });
 
 
@@ -823,25 +830,25 @@ function incrimentTotalValue() {
 
 
 // ***************************** this [timer] function work when we click Next qus ***********************
-let timerValue = 0;
+let timerValue = 10;
 function timer() {
     setIntervalId = setInterval(function () {
-        timerValue++;
+        timerValue--;
         document.querySelector(".timer-box").textContent = `${timerValue}`;
     }, 1000);
 }
 
 timer(); // Call the function for the first time  when reload the page
-setInterval(function(){
-    if(timerValue === 10){
+setInterval(function () {
+    if (timerValue === 0) {
         clearInterval(setIntervalId);
         ShowAns();
     }
-},1000);
+}, 1000);
 
 
 
-// ************************************ if timer value == 10 the function will run **************************   
+// ************************************ if timerValue == 10 the function will run **************************   
 function ShowAns() {
     answer.forEach((el) => {
         if (el.textContent == questionData[questionDataNumber].correct_option) {
@@ -878,12 +885,13 @@ nextQue.onclick = function () {
     document.querySelector(".overlay-cong-overlay-2").style.display = "none";
     answer.forEach((el, i) => {
         answer[i].style.pointerEvents = "all";
+        el.style.pointerEvents = "all";
     });
 
     gsapAnimationQue();
-    clearInterval(setIntervalId); // Clear any existing interval before starting a new one
+    clearInterval(setIntervalId);
     timer();
-     timerValue = 0;
+    timerValue = 10;
 };
 
 // ******************************** when click next que all question loading animation **************************
